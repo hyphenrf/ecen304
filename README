@@ -1,3 +1,22 @@
 # ECEN-304 Project: Bookstore Management System
 
+The architecture:
+
+    +--------------------------------------------------------+
+    |                          |                             |
+    |                          |                             |
+    |                 +-----------------+                    |
+    |         Query <-|- Obj instance   |REST                |
+    |                 |                 |API                 |
+    |    Database     |     Backend   <-|->    Frontend      |
+    |                 |                 |JSON                |
+    |         Query  -|->Obj instance   |Probably            |
+    |                 +-----------------+                    |
+    |                          |                             |
+    |                          |                             |
+    +--------------------------------------------------------+
+
+Database can be either SQL or JSON or whatever. Whatever it is, there will be
+code that serializes objects from runtime and converts them to a given db's
+language.
 
