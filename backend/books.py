@@ -3,14 +3,18 @@ import csv
 
 Books=[]
 class Book:
+
+    no_of_avilable_books = 200
+    no_of_borrowed = 0
+    no_of_sold = 0
+
     def __init__(self,isbn,title,author,year):
         self.isbn = isbn
         self.title = title
         self.author = author
         self.year = year
-        
-        
 
+   
 
 def main():
     
