@@ -41,9 +41,9 @@ class Admin():
         self.id = self.__inc()
 
     @classmethod
-    def __inc(self):
-        self._adm_count += 1
-        return int(__ADM_SALT + str(self._adm_count))
+    def __inc(cls):
+        cls._adm_count += 1
+        return int(__ADM_SALT + str(cls._adm_count))
 
     def del_obj(obj_id: int):
         # Should check if obj is in runtime and delete it
