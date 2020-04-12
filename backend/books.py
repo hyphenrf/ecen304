@@ -3,18 +3,28 @@ import csv
 
 Books=[]
 class Book:
-
-    no_of_avilable_books = 200
-    no_of_borrowed = 0
-    no_of_sold = 0
-
-    def __init__(self,isbn,title,author,year):
+    def __init__(self,isbn,title,author,year,total,sold,borrowed):
         self.isbn = isbn
         self.title = title
         self.author = author
         self.year = year
+        self.total = total
+        self.sold = sold
+        self.borrowed = borrowed
+    
+    def EditBook_Basic(self,isbn,title,author,year):
+        self.isbn = isbn
+        self.title = title
+        self.author = author
+        self.year = year
+    
+    def EditBook_Num(self,total,sold,borrowed):
+        self.total = total
+        self.sold = sold
+        self.borrowed = borrowed
+        
+        
 
-   
 
 def main():
     # load books.csv
@@ -36,4 +46,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main()p
