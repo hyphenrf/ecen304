@@ -17,14 +17,17 @@ class Book:
    
 
 def main():
-    
+    # load books.csv
     f=open("books.csv")
     reader =csv.reader(f)
+    #create book objects
     for isbn,title,author,year in reader:
         if year != "year":        
             book=Book(isbn,title,author,year)
+            #list of book objects
             Books.append(book)
     
+    # show list of Books
     for book in Books:
         print ('ISBN: %s - Title: %s - Author: %s - Year: %s' % (book.isbn,book.title,book.author,book.year))
         
