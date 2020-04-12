@@ -1,2 +1,32 @@
-print("rabena yestor")
-print("Trial 3ashan neshof el pull wel push wel hagat deh")
+
+import csv
+
+Books=[]
+class Book:
+    def __init__(self,isbn,title,author,year):
+        self.isbn = isbn
+        self.title = title
+        self.author = author
+        self.year = year
+        
+        
+
+
+def main():
+    
+    f=open("books.csv")
+    reader =csv.reader(f)
+    for isbn,title,author,year in reader:
+        if year != "year":        
+            book=Book(isbn,title,author,year)
+            Books.append(book)
+    
+    for book in Books:
+        print ('ISBN: %s - Title: %s - Author: %s - Year: %s' % (book.isbn,book.title,book.author,book.year))
+        
+    print("done")            
+    
+
+
+if __name__ == "__main__":
+    main()
