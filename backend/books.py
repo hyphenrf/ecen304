@@ -11,6 +11,8 @@ class Book:
         self.total = total
         self.sold = sold
         self.borrowed = borrowed
+        self.ratings = []
+        self.reviews = []
     
     def EditBook_Basic(self,isbn,title,author,year):
         self.isbn = isbn
@@ -22,7 +24,14 @@ class Book:
         self.total = total
         self.sold = sold
         self.borrowed = borrowed
-        
+
+    def Rating(self,user, rating):
+        new = {"User": user, "Rating": rating}
+        self.ratings.append(new)
+
+    def Review(self,user, review):
+        new = {"User": user, "Review": rating}
+        self.review.append(new)    
         
 
 
@@ -33,7 +42,7 @@ def main():
     #create book objects
     for isbn,title,author,year in reader:
         if year != "year":        
-            book=Book(isbn,title,author,year)
+            book=Book(isbn,title,author,year)            
             #list of book objects
             Books.append(book)
     
