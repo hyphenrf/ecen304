@@ -33,11 +33,11 @@ class Author:
 
     def __init__(self, email, pwd, name='Jay', dob=None):
         self.name = name
-        self.genre = []
-        self.lob = []
         self.dob = dateValidator(dob)
         self.email = _verify_email(email)
         self.pwd = _hashed(pwd)
+        self.genre = []
+        self.lob = []
 
     def addGenre(self, data):
         if(isinstance(data, str)):
@@ -89,12 +89,3 @@ class Author:
 
     def removeAuthor(self, id):
         return None
-
-
-# ahmed = Author("mahmoud@gmail.com", "mahmoud")
-# ahmed.addGenre("lo")
-# ahmed.addGenre("boo")
-# ahmed.addBook("boo")
-# ahmed.addBook("kool")
-# print(ahmed.genre)
-# print(ahmed.lob)
