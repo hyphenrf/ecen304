@@ -10,25 +10,38 @@ class User:
         List of books (lob): List<Int:ID>
         Email: str
         Password (pwd): str
+
         Borrowed books: List<Int:ID>
         Bought books: List<Int:ID>
         Pending books: List<Int:ID>
         Rated books => ratings Dict:{Int:ID-Book : Int:Rating1-5}
+        comments=> comments Dict:{Int:ID-Book : str:comment}
+        Address: object Dict:{lat:float, long:float} ← coordinates?
+
         Payment method: <<<UNSURE>>> 
         Savings in account 
-        Address: String/Pair<Float, Float> ← coordinates?
 
 
     Methods:
         #ADDING => adding the author is done when the class instance is initiated
         addShelf() later on
         addBookToShelf() later on
+        addRating()
+        addComment()
+        addVisaSerial() => adds, edits and checks for validity
+        borrow()
+        buy()
+        addAddress() 
 
         #EDITING
         editName()
         editDob()
         editPwd()
         editEmail()
+
+        editRating()
+        editComment()
+        EditAddress()
 
         #REMOVING
         deleteShelf() later on
@@ -40,23 +53,40 @@ class User:
         self.dob = dateValidator(dob)
         self.email = _verify_email(email)
         self.pwd = _hashed(pwd)
-        self.lob = []
+        self.visaSerial = ''
+        self.borrowed = []
+        self.bought = []
+        self.pending = []
+        self.rated = {}
+        self.comments = {}
+        self.address = {}
 
-    def addGenre(self, data):
-        if(isinstance(data, str)):
-            self.genre.append(data)
+    def addRating(self, bookID: int, rate: int):
+        self.rated[bookID] = rate
+        return self.rated
+
+    def addComment(self, bookID: int, comment: str):
+        self.rated[bookID] = comment
+        return self.comments
+
+    def VisaSerial(self, visaSerial: int):
+        if len(visaSerial) < 12:
+            raise Exception('Invalid VISA serial number')
         else:
-            print('Data not a string')
+            self.visaSerial = visaSerial
+        return self.visaSerial
 
-    def editGenre(self, equal, change):
-        for i in range(len(self.genre)):
-            if self.genre[i] == equal:
-                self.genre[i] = change
-        return self.genre
+    def borrow(self, bookID: int):
+        self.borrowed.append(bookID)
+        return self.borrowed
 
-    def removeGenre(self, data):
-        filter(lambda genre: genre == data, self.genre)
-        return self.genre
+    def buy(self, bookID: int):
+        self.bought.append(bookID)
+        return self.bought
+
+    def addAddress(self, lat: float, long: float, addressName):
+        self.address[addressName] = {lat, long}
+        return self.address
 
     def editName(self, data):
         self.name = data
@@ -73,5 +103,5 @@ class User:
         self.name = _verify_email(data)
         return self.email
 
-    def removeAuthor(self, id):
+    def removeUser(self, id):
         return None
