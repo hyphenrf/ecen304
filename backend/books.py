@@ -1,4 +1,5 @@
 import csv
+#import os
 import random 
 from datetime import datetime
 import threading
@@ -20,11 +21,11 @@ class Book:
         self.title = title
         self.author = author
         self.year = year
-        self.total = total
-        self.sold = sold
-        self.borrowed = borrowed
-        self.available= total-sold-borrowed
-        self.price = price
+        self.total = int(total)
+        self.sold = int(sold)
+        self.borrowed = int(sold)
+        self.available= int(total)-int(sold)-int(borrowed)
+        self.price = float(price)
         self.ratings = []
         self.reviews = []
     
@@ -62,6 +63,7 @@ class Book:
 
 def main():
     # load books.csv
+    #os.chdir(r'C:\Users\ascom\Downloads\Documents\304 software\git\ecen304\backend')
     f=open("Updated_books.csv")
     reader =csv.reader(f)
     #create book objects
@@ -73,7 +75,7 @@ def main():
     
     # show list of Books
     for book in Books:
-        print ('ISBN: %s , Title: %s , Author: %s , Year: %s , Total: %d , Sold: %d , Borrowed: %d , Available: %d , Price: %f' % (book.isbn,book.title,book.author,book.year,book.total,book.sold,book.borrowed,book.available,book.price))
+        print ('ISBN: %s , Title: %s , Author: %s , Year: %s , Total: %d , Sold: %d , Borrowed: %d , Available: %d , Price: %d' % (book.isbn,book.title,book.author,book.year,book.total,book.sold,book.borrowed,book.available,book.price))
         
     print("done")            
     
