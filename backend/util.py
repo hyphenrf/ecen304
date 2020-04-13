@@ -39,7 +39,7 @@ def _verify_email(email: str) -> bool:
     emails are case-insensitive so it's easier to just normalise them
     '''
     assert isinstance(email, str), "Emails must be strings."
-    email = email.trim()
+    email = email.strip()
     assert email.find(" ") == -1, "Emails cannot contain spaces"
 
     regex = re.compile(
