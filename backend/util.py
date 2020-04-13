@@ -23,11 +23,11 @@ def dateValidator(date):
         return date
 
 
-def hashed(message: str) -> str:
+def _hashed(message: str) -> str:
     return sha1(str.encode(message)).hexdigest()
 
 
-def verify_email(email: str) -> bool:
+def _verify_email(email: str) -> bool:
     '''takes a string and returns bool representing validity
     A valid email address is local@domain where:
     local is:
@@ -39,7 +39,7 @@ def verify_email(email: str) -> bool:
     emails are case-insensitive so it's easier to just normalise them
     '''
     assert isinstance(email, str), "Emails must be strings."
-    email = email.trim()
+    email = email.strip()
     assert email.find(" ") == -1, "Emails cannot contain spaces"
 
     regex = re.compile(
@@ -50,4 +50,4 @@ def verify_email(email: str) -> bool:
         re.A + re.VERBOSE
     )
     return bool(regex.fullmatch(email))
-    
+
