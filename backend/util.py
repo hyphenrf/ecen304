@@ -5,11 +5,27 @@ Email validation, Date/time manipulation, non-std Library interfacing, etc..
 
 import re
 from hashlib import sha1
+import datetime
 
+
+def dateValidator(date):
+    day, month, year = date.split('/')
+
+    isValidDate = True
+    try:
+        datetime.datetime(int(year), int(month), int(day))
+    except ValueError:
+        isValidDate = False
+
+    if(isValidDate == False):
+        raise Exception("Input date is not valid..")
+    else:
+        return date
 
 
 def hashed(message: str) -> str:
     return sha1(str.encode(message)).hexdigest()
+
 
 def verify_email(email: str) -> bool:
     '''takes a string and returns bool representing validity
@@ -25,7 +41,7 @@ def verify_email(email: str) -> bool:
     assert isinstance(email, str), "Emails must be strings."
     email = email.trim()
     assert email.find(" ") == -1, "Emails cannot contain spaces"
-    
+
     regex = re.compile(
         """
         ^([A-Za-z0-9]+\.{1}?)*[A-Za-z0-9]+    # Local 
@@ -34,4 +50,4 @@ def verify_email(email: str) -> bool:
         re.A + re.VERBOSE
     )
     return bool(regex.fullmatch(email))
-
+    
