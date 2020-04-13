@@ -1,5 +1,5 @@
 import csv
-#import os
+import os
 import random 
 from datetime import datetime
 import threading
@@ -63,8 +63,8 @@ class Book:
 
 def main():
     # load books.csv
-    #os.chdir(r'C:\Users\ascom\Downloads\Documents\304 software\git\ecen304\backend')
-    f=open("Updated_books.csv")
+    #f-open("Updated_books.csv")
+    f=open(os.path.abspath("backend\\Updated_books.csv"),'r')
     reader =csv.reader(f)
     #create book objects
     for isbn,title,author,year,total,sold,borrowed,price in reader:
