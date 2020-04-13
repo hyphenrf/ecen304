@@ -25,7 +25,7 @@ class Admin():
         - 
     '''
 
-    __ADM_SALT = "97100109"
+    __ADM_SALT = "97100109" # is this better a @staticmethod?
     _adm_count = 0
 
     def __init__(self, email: str, passwd: str, name= "Jon Doe"):
@@ -35,6 +35,7 @@ class Admin():
         assert isinstance(passwd, str), "Password must be a string"
         assert isinstance(name, str), "Name must be a string"
 
+        # Should probably use @property on things that need checking
         self.email = email.strip()
         self.passwd = _hashed(passwd)
         self.name = name
