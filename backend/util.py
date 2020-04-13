@@ -23,11 +23,11 @@ def dateValidator(date):
         return date
 
 
-def hashed(message: str) -> str:
+def _hashed(message: str) -> str:
     return sha1(str.encode(message)).hexdigest()
 
 
-def verify_email(email: str) -> bool:
+def _verify_email(email: str) -> bool:
     '''takes a string and returns bool representing validity
     A valid email address is local@domain where:
     local is:
@@ -50,4 +50,4 @@ def verify_email(email: str) -> bool:
         re.A + re.VERBOSE
     )
     return bool(regex.fullmatch(email))
-    
+
