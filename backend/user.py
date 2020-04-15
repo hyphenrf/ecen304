@@ -1,4 +1,4 @@
-from .util import dateValidator, _hashed, _verify_email
+from .util import _verify_date, _hashed, _verify_email
 
 
 class User:
@@ -50,7 +50,7 @@ class User:
 
     def __init__(self, email, pwd, name='Jay', dob=None):
         self.name = name
-        self.dob = dateValidator(dob)
+        self.dob = _verify_date(dob)
         self.email = _verify_email(email)
         self.pwd = _hashed(pwd)
         self.visaSerial = ''
