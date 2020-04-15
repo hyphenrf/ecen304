@@ -1,4 +1,4 @@
-from .util import _verify_date, _hashed, _verify_email
+from .util import _hashed
 
 
 class User:
@@ -49,10 +49,16 @@ class User:
         removeAddress()
     '''
 
-    def __init__(self, email, pwd, name='Jay', dob=None):
+    def __init__(self, email: str, pwd: str, name='Jay', dob=None):
+
+        #ASSERTIONS
+        assert isinstance(pwd, str), "Password must be a string"
+        assert isinstance(email, str), "Email must be a string"
+        assert isinstance(name, str), "Name must be a string"
+
         self.name = name
-        self.dob = _verify_date(dob)
-        self.email = _verify_email(email)
+        self.dob = dob
+        self.email = email
         self.pwd = _hashed(pwd)
         self.visaSerial = 0
         self.borrowed = []
@@ -64,15 +70,15 @@ class User:
 
     # ADDING
 
-    def addRating(self, bookID: int, rate: int) -> dict:
+    def add_rating(self, bookID: int, rate: int) -> dict:
         self.rated[bookID] = rate
         return self.rated
 
-    def addComment(self, bookID: int, comment: str) -> dict:
+    def add_comment(self, bookID: int, comment: str) -> dict:
         self.rated[bookID] = comment
         return self.comments
 
-    def VisaSerial(self, visaSerial: int) -> int:
+    def visa_serial(self, visaSerial: int) -> int:
         if len(visaSerial) < 12:
             raise Exception('Invalid VISA serial number')
         else:
@@ -87,41 +93,41 @@ class User:
         self.bought.append(bookID)
         return self.bought
 
-    def addAddress(self, lat: float, long: float, addressName: str) -> dict:
+    def add_address(self, lat: float, long: float, addressName: str) -> dict:
         self.address[addressName] = {lat, long}
         return self.address
 
     # EDITING
-    def editName(self, data: str) -> str:
+    def edit_name(self, data: str) -> str:
         self.name = data
         return self.name
 
-    def editDob(self, data: str) -> str:
+    def edit_dob(self, data: str) -> str:
         self.dob = data
         return self.dob
 
-    def editPwd(self, data):
+    def edit_pwd(self, data):
         self.pwd = _hashed(data)
 
-    def editEmail(self, data: str) -> str:
-        self.name = _verify_email(data)
+    def edit_email(self, data: str) -> str:
+        self.name = data
         return self.email
 
-    def editRating(self, bookID: int, rate: int) -> dict:
+    def edit_eating(self, bookID: int, rate: int) -> dict:
         if self.rated[bookID]:
             self.rated[bookID] = rate
         else:
             raise Exception('Book not found. Please enter a valid ID')
         return self.rated
 
-    def editComment(self, bookID: int, comment: str) -> dict:
+    def edit_comment(self, bookID: int, comment: str) -> dict:
         if self.comments[bookID]:
             self.comments[bookID] = comment
         else:
             raise Exception('Book not found. Please enter a valid ID')
         return self.comments
 
-    def editAddress(self, lat: float, long: float, addressName: str) -> dict:
+    def edit_address(self, lat: float, long: float, addressName: str) -> dict:
         if self.address[addressName]:
             self.address[addressName] = {lat, long}
         else:
@@ -130,25 +136,23 @@ class User:
         return self.address
 
     # REMOVING
-    def removeUser(self, id):
-        return None
 
-    def removeRating(self, bookID: int) -> dict:
+    def remove_rating(self, bookID: int) -> dict:
         if self.rated[bookID]:
             self.rated.pop(bookID)
         else:
             raise Exception('Book not found. Please enter a valid ID')
         return self.rated
 
-    def removeComment(self, bookID: int) -> dict:
+    def remove_comment(self, bookID: int) -> dict:
         if self.comments[bookID]:
             self.comments.pop(bookID)
         else:
             raise Exception('Book not found. Please enter a valid ID')
         return self.comments
 
-    def removeAddress(self, addressName: str) -> dict:
-        if self.address[bookID]:
+    def remove_address(self, addressName: str) -> dict:
+        if self.address[addressName]:
             self.address.pop(addressName)
         else:
             raise Exception('Book not found. Please enter a valid ID')
