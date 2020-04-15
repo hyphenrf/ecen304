@@ -112,7 +112,7 @@ class User:
         self.name = data
         return self.email
 
-    def edit_eating(self, bookID: int, rate: int) -> dict:
+    def edit_rating(self, bookID: int, rate: int) -> dict:
         if self.rated[bookID]:
             self.rated[bookID] = rate
         else:
