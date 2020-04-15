@@ -83,16 +83,14 @@ class Author:
         self.name = name
         return self.name
 
-    def edit_dob(self, data):
-        self.dob = data
+    def edit_dob(self, dob: str) -> str:
+        self.dob = dob
         return self.dob
 
-    def edit_pwd(self, data):
-        self.pwd = _hashed(data)
+    def edit_pwd(self, pwd: str) -> str:
+        self.pwd = _hashed(pwd)
+        return self.pwd
 
-    def edit_email(self, data):
-        self.name = data
+    def edit_email(self, email: str) -> str:
+        self.name = email
         return self.email
-
-    def remove_author(self, id):
-        return None
