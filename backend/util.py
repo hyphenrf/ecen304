@@ -6,9 +6,12 @@ Email validation, Date/time manipulation, non-std Library interfacing, etc..
 import re
 from hashlib import sha1
 import datetime
+from csv import reader
 
 
-def dateValidator(date):
+
+def _verify_date(date):
+    #TODO: refactor this out -- use EPOCH ints.
     day, month, year = date.split('/')
 
     isValidDate = True
