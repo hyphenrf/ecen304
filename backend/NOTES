@@ -2,4 +2,7 @@
   Only stringify on frontend
 
 - What is threading (see backend/books.py) used for? Are we spawning a new
-  thread for a timer?
+  thread for a timera?
+
+- ASSUME ALL DATA ENTERING BACKEND TO BE CORRECT
+  all inwards validation will be at the API endpoint
