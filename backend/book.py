@@ -1,6 +1,7 @@
 '''module docstring here'''
 
 
+
 class Book:
     '''Insert your documentation here
     notes on some of this class properties:
@@ -35,12 +36,16 @@ class Book:
     _ratings = {}
     _reviews = {}
 
-    def __init__(self, isbn: int, title: str, author: str, year: int):
+    def __init__(self, isbn: int, title: str, author_ids: [int], year: int,
+            edition: int = 1):
+        # These define a unique object
         self.isbn = isbn
         self.title = title
-        self.author = author
+        self.author = author_ids
         self.year = year
+        self.edition = edition
 
+        # These don't
         self.is_borrow = False
         self.borrow_limit = 7
         self.is_sell = False
