@@ -8,7 +8,8 @@ from hashlib import sha1
 import datetime
 from csv import reader
 
-
+def _serialize(obj):
+    return obj.__dict__
 
 def _verify_date(date):
     #TODO: refactor this out -- use EPOCH ints.
