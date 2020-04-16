@@ -31,13 +31,6 @@ class Book:
     __stock = 1
     ##############
 
-    is_borrow = False
-    borrow_limit = 7
-
-    is_sell = False
-    warranty = 0
-    price = 0.0
-
     _sold = 0
     _ratings = {}
     _reviews = {}
@@ -47,6 +40,12 @@ class Book:
         self.title = title
         self.author = author
         self.year = year
+
+        self.is_borrow = False
+        self.borrow_limit = 7
+        self.is_sell = False
+        self.warranty = 0
+        self.price = 0.0
 
     @property
     def id(self): return self.isbn
