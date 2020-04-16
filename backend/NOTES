@@ -4,5 +4,24 @@
 - What is threading (see backend/books.py) used for? Are we spawning a new
   thread for a timera?
 
-- ASSUME ALL DATA ENTERING BACKEND TO BE CORRECT
-  all inwards validation will be at the API endpoint
+- I thought about splitting book to sellable and borrowable subclasses but that
+  might not be a good idea as the state of each book object can change 
+  (and a book can be BOTH sellable and borrowable).
+
+- ASSUME ALL DATA ENTERING BACKEND TO BE VALID:
+  all inwards validation will be at the API endpoint.
+  all logic checking and correctness, however, will still be the backend's business.
+
+
+
+
+TODO:
+
+- Review wesam's code
+- Finish Books code
+- Rearrange classes and introduce inheritance
+
+- create a release 0.1, merge it into master, delete rc and develop
+
+- start work on flask and state.py
+
