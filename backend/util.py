@@ -11,6 +11,9 @@ from csv import reader
 def _serialize(obj):
     return obj.__dict__
 
+def _salt(name: str) -> str:
+    return "".join(map(lambda x: str(ord(x)), name))
+
 def _verify_date(date):
     #TODO: refactor this out -- use EPOCH ints.
     day, month, year = date.split('/')

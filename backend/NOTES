@@ -12,8 +12,15 @@
   all inwards validation will be at the API endpoint.
   all logic checking and correctness, however, will still be the backend's business.
 
+- epoch doesn't work for anything earlier than 1970. We need to still use ints
+	for simplicity
+		proposal: use tuple of ints (Y, M, D) where at least Y must be specified.
 
+- user should have status (verified, banned, suspended, ...)
+- Admin should change user status
+- Admin should delete book reviews and ratings??
 
+- book covers and author pics
 
 TODO:
 

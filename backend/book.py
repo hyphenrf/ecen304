@@ -46,6 +46,7 @@ class Book:
         self.edition = edition
 
         # These don't
+        self.genres = set()
         self.is_borrow = False
         self.borrow_limit = 7
         self.is_sell = False

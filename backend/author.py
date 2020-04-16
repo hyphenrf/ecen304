@@ -1,106 +1,52 @@
-from .util import _hashed
+'''Insert module docstring here'''
+
+from util import _salt
+
 
 
 class Author:
-    '''Author class is resposnible for the Authors's data modification and managment
+    '''Author class is resposnible for the Authors's data managment
     Atribs:
-        ID: Int
-        Name: String
-        Date of birth (dob): Int:EPOCH
-        List of books (lob): List<Int:ID>
-        Genres: List<String>
-        Email: str
-        Password (pwd): str
-
-    Methods:
-        # ADDING => adding the author is done when the class instance is initiated
-        addGenre()
-        addBook()
-
-        # EDITING
-        editGenre()
-        editBook()
-        editName()
-        editDob()
-        editPwd()
-        editEmail()
-
-        # REMOVING
-        removeGenre()
-        removeBook()
-        removeAuthor()
+        name: str
+        email: str
+        dob (date of birth): tuple(Y, M, D)
+        id: Int
+        books: Set(Book)
+    read-only:
+        genres: Set(str)
     '''
+    __AUTHOR_SALT = _salt("ath")
+    _author_count = 0
 
-    #TODO: author name shouldn't be optional.
-    #TODO: author doesn't have a password or email
-    def __init__(self, email: str, pwd: str, name='Jay', dob=None):
+    id = self.__inc()
 
-        # ASSERTIONS TODO: assertions are not required as data typing is assumed correct
-        assert isinstance(pwd, str), "Password must be a string"
-        assert isinstance(email, str), "Email must be a string"
-        assert isinstance(name, str), "Name must be a string"
-
+    def __init__(self, name: str, dob: tuple, dod: tuple = (0,0,0)):
         self.name = name
         self.dob = dob
-        #TODO: how to represent if the author is dead
-        #self.email = email
-        #self.pwd = _hashed(pwd)
-        self.genre = [] #TODO: genres are better a set
-        self.lob = [] #TODO: what is this?? DONE: List of Books
-        #TODO: change to "books", make it a set
-        #TODO: make genre a volatile property calculated from books
-        #      where books is a list of Book objects supplied directly to the
-        #      class.
+        self.dod = dod
+        
+        self._books = set()
+        self._genres = set()
 
-    # def add_genre(self, Genre: str) -> list:
-    #     if(isinstance(Genre, str)):
-    #         self.genre.append(Genre)
-    #     else:
-    #         print('Data not a string')
-    #     return self.genre
+    @classmethod
+    def __inc(cls): 
+        cls._author_count += 1
+        return cls._author_count
 
-    # def edit_genre(self, old: str, new: str) -> list:
-    #     for i in range(len(self.genre)):
-    #         if self.genre[i] == old:
-    #             self.genre[i] = new
-    #     return self.genre
+    @property
+    def genres(self):
+        if self._genres:
+            return self._genres
 
-    # def remove_genre(self, data: str) -> list:
-    #     filter(lambda genre: genre == str, self.genre)
-    #     return self.genre
-    
-    #TODO: this takes book object, returns None
-    def add_book(self, book: str) -> list:
-        if(isinstance(book, str)):
-            self.lob.append(book)
-        else:
-            print('Data not a string')
-        return self.lob
-    
-    #TODO: edit is just remove + add
-    def edit_book(self, old: str, new: str) -> list:
-        for i in range(len(self.lob)):
-            if self.lob[i] == old:
-                self.lob[i] = new
-        return self.lob
-    
-    #TODO:
-    def remove_book(self, data: str) -> list:
-        filter(lambda book: book == data, self.lob)
-        return self.lob
+        gset = set()
+        for book in self.books:
+            for g in book.genres:
+                gset.add(g)
+        return gset
 
-    # def edit_name(self, name: str) -> str:
-    #     self.name = name
-    #     return self.name
+    @property
+    def books(self): return self._books
 
-    # def edit_dob(self, dob: str) -> str:
-    #     self.dob = dob
-    #     return self.dob
+    @books.setter
+    def books(self, bs): self._books = set(bs)
 
-    # def edit_pwd(self, pwd: str) -> str:
-    #     self.pwd = _hashed(pwd)
-    #     return self.pwd
-
-    # def edit_email(self, email: str) -> str:
-    #     self.name = email
-    #     return self.email
