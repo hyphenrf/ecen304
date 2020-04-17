@@ -1,27 +1,28 @@
 import csv
 import os
-import random 
 from datetime import datetime
 import threading
 
-Books=[]
-BendingOrders=[]
-Delivered=[]
+#TODO: This is DB/State functionality, A class is concerned only with a single book.
+#Books=[]
+#BendingOrders=[]
+#Delivered=[]
 
-def UpdateOrders():
-  threading.Timer(86400, UpdateOrders).start()
-  ''' ckeck date to see if 3 days passed for each dictionary in BendingOrders.
-  If yes: Update state and remove from BendingOrders and add to Delivered.
-  '''
-UpdateOrders()
+#def UpdateOrders():
+#  ''' ckeck date to see if 3 days passed for each dictionary in BendingOrders.
+#  If yes: Update state and remove from BendingOrders and add to Delivered.
+#  '''
+#  threading.Timer(86400, UpdateOrders).start()
+#UpdateOrders()
 
 class Book:
     def __init__(self,isbn,title,author,year,total,sold,borrowed,price):
+        #TODO: do we need to put some of those non-identifying optional info in a dict?
         self.isbn = isbn
         self.title = title
         self.author = author
-        self.year = year
-        self.total = int(total)
+        self.year = year #TODO: Maybe make this int and do checks on it?
+        self.stock = int(stock)
         self.sold = int(sold)
         self.borrowed = int(sold)
         self.available= int(total)-int(sold)-int(borrowed)
@@ -46,7 +47,12 @@ class Book:
         for book in books:
             if book.isbn == isbn:
                 time = datetime.now()
-                order = {"User": user, "Book": book, "time": time, "state":"To be delivered within three days."}
+                order = {
+                        "User": user, 
+                        "Book": book, 
+                        "time": time, 
+                        "state":"To be delivered within three days."
+                        }
                 BendingOrders.append(order)
                 self.total -= 1
                 self.sold += 1
@@ -61,24 +67,27 @@ class Book:
         
 
 
-def main():
-    # load books.csv
-    #f-open("Updated_books.csv")
-    f=open(os.path.abspath("backend\\Updated_books.csv"),'r')
-    reader =csv.reader(f)
-    #create book objects
-    for isbn,title,author,year,total,sold,borrowed,price in reader:
+#def main():
+#    # load books.csv
+#    #f-open("Updated_books.csv")
+#    f=open(os.path.abspath("backend\\Updated_books.csv"),'r')
+#    reader =csv.reader(f)
+#    #create book objects
+#    for isbn,title,author,year,total,sold,borrowed,price in reader:
        
-        book=Book(isbn,title,author,year,total,sold,borrowed,price)            
-        #list of book objects
-        Books.append(book)
+#        book=Book(isbn,title,author,year,total,sold,borrowed,price)            
+#        #list of book objects
+#        Books.append(book)
     
-    # show list of Books
-    for book in Books:
-        print ('ISBN: %s , Title: %s , Author: %s , Year: %s , Total: %d , Sold: %d , Borrowed: %d , Available: %d , Price: %d' % (book.isbn,book.title,book.author,book.year,book.total,book.sold,book.borrowed,book.available,book.price))
+#    # show list of Books
+#    for book in Books:
+#        print ('ISBN: %s , Title: %s , Author: %s , Year: %s , Total: %d ,'
+#        ' Sold: %d , Borrowed: %d , Available: %d , Price: %d' 
+#        % (book.isbn,book.title,book.author,book.year,book.total,book.sold,
+#        book.borrowed,book.available,book.price))
         
-    print("done")            
+#    print("done")            
     
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()

@@ -19,16 +19,16 @@ import json
 
 
 
-state = {}
+_state = {}
 
 try:
     with open("db.json", "r") as db:
-        state = json.load(db)
+        _state = json.load(db)
 except FileNotFoundError:
     print("db.json doesn't exist. Creating...")
     open("db.json", "w").close()
 
 def write_state():
     with open("db.json", "w") as db:
-    json.dump(state, db)
+    json.dump(_state, db)
 

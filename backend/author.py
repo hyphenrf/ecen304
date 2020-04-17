@@ -1,6 +1,5 @@
 from .util import _hashed
 
-
 class Author:
     '''Author class is resposnible for the Authors's data modification and managment
     Atribs:

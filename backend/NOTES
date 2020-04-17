@@ -1,0 +1,5 @@
+- all time handling within the backend (and possibly DB) should be using ints.
+  Only stringify on frontend
+
+- What is threading (see backend/books.py) used for? Are we spawning a new
+  thread for a timer?
