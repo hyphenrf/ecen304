@@ -6,7 +6,7 @@ Email validation, Date/time manipulation, non-std Library interfacing, etc..
 import re
 from hashlib import sha1
 import datetime
-from csv import reader
+from time import time
 
 def _serialize(obj):
     return obj.__dict__
@@ -58,3 +58,8 @@ def _verify_email(email: str) -> bool:
     )
     return bool(regex.fullmatch(email))
 
+def _time() -> int:
+    return int(time())
+
+def _seconds_of_days(days: int) -> int:
+    return days * 24 * 60 * 60
