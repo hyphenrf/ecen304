@@ -9,7 +9,7 @@ Classes:
     - User
 """
 
-from .util import _hashed
+from .util import _hashed, _salt
 
 
 
@@ -25,7 +25,7 @@ class Admin:
         - 
     '''
 
-    __ADM_SALT = "97100109"
+    __ADM_SALT = _salt("adm")
     _adm_count = 0
     id = self.__inc()
 
