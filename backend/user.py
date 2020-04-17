@@ -1,24 +1,26 @@
-from .util import _hashed
+from .util import _hashed, _salt
+from .book import Book
+
 
 
 class User:
-    '''Author class is resposnible for the Authos's data modification and managment
+    '''Author class is resposnible for the Authos's data managment
     Atribs:
-        ID: Int
-        Name: String
-        Date of birth (dob): Int:EPOCH
-        List of books (lob): List<Int:ID>
-        Email: str
-        Password (pwd): str
-        Borrowed books: List<Int:ID>
-        Bought books: List<Int:ID>
-        Pending books: List<Int:ID>
-        Rated books => ratings Dict:{Int:ID-Book : Int:Rating1-5}
-        comments=> comments Dict:{Int:ID-Book : str:comment}
-        Address: object Dict:{lat:float, long:float} ← coordinates?
+        id: int
+        email: str
+        passwd: str
+        name: str
+        dob (date of birth): tuple
 
-        Payment method: <<<UNSURE>>> 
-        Savings in account 
+        address: tuple(str, tuple(float, float))
+        visa_serial: int
+
+    Relating to the Book class:
+        borrowed: set(Book.id)
+        pending: { Book.id: int(amount) }
+        bought: { Book.id: int(amount) }
+        ratings: { Book.id : int(rating1-5) }
+        comments: { Book.id : str(comment) }
 
 
     Methods:
@@ -61,9 +63,9 @@ class User:
         self.email = email
         self.pwd = _hashed(pwd)
         self.visaSerial = 0
-        self.borrowed = []
-        self.bought = []
-        self.pending = []
+        self.borrowed = {}
+        self.bought = {}
+        self.pending = {}
         self.rated = {}
         self.comments = {}
         self.address = {}
