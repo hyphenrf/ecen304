@@ -1,5 +1,7 @@
 '''module docstring here'''
 
+from .util import _salt
+
 
 
 class Book:
@@ -18,23 +20,13 @@ class Book:
       correctness.
 
 
-    methods in this class may raise ValueError 
+    methods in this class may raise ValueError
     depending on the values available at runtime.
     '''
     # note: attrs declared here retain value after re-initialization,
-    #       but reset on a new object initialization. (objs are mutable).
+    #       but don't reset on a new object initialization (if referenced)
+    #       examples of referenced values are anything mutable, so lists etc
 
-    # note: these three values maintain a strong logical relationship, so they
-    #       were privated aggressively.
-    ##############
-    __borrowed = 0
-    __pending = 0
-    __stock = 1
-    ##############
-
-    _sold = 0
-    _ratings = {}
-    _reviews = {}
 
     def __init__(self, isbn: int, title: str, author_ids: [int], year: int,
             edition: int = 1):
@@ -52,6 +44,18 @@ class Book:
         self.is_sell = False
         self.warranty = 0
         self.price = 0.0
+
+        # these three values maintain a strong logical relationship, so they
+        # were privated aggressively.
+        ##############
+        self.__borrowed = 0
+        self.__pending = 0
+        self.__stock = 1
+        ##############
+
+        self._sold = 0
+        self._ratings = {}
+        self._reviews = {}
 
     @property
     def id(self): return self.isbn
@@ -89,12 +93,6 @@ class Book:
         else:
             raise ValueError("You can't have negative stock.")
 
-    def rate(self, user: int, rating: float) -> None:
-        self._ratings[user] = rating
-
-    def review(self, user: int, review: str) -> None:
-        self._reviews[user] = review
-
     def order(self, num: int = 1) -> None:
         if self.is_sell and num <= self.available:
             self.__pending += num
@@ -127,6 +125,12 @@ class Book:
         else:
             raise ValueError("returning more than there is borrowed.")
 
+    def rate(self, user: int, rating: int) -> None:
+        self._ratings[user] = rating
+
+    def review(self, user: int, review: str) -> None:
+        self._reviews[user] = review
+
 
 class Author:
     '''Author class is resposnible for the Authors's data managment
@@ -139,12 +143,12 @@ class Author:
     read-only:
         genres: Set(str)
     '''
-    __AUTHOR_SALT = _salt("ath")
-    _author_count = 0
-
-    id = self.__inc()
+    _SALT = _salt("ath")
+    _count = 0
 
     def __init__(self, name: str, dob: tuple, dod: tuple = (0,0,0)):
+        self._id = self._gen_id()
+
         self.name = name
         self.dob = dob
         self.dod = dod
@@ -152,10 +156,13 @@ class Author:
         self._books = set()
         self._genres = set()
 
+    @property
+    def id(self): return self._id
+
     @classmethod
-    def __inc(cls):
-        cls._author_count += 1
-        return cls._author_count
+    def _gen_id(cls):
+        cls._count += 1
+        return int(cls._SALT + str(cls._count))
 
     @property
     def genres(self):

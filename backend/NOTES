@@ -5,7 +5,7 @@
   thread for a timera?
 
 - I thought about splitting book to sellable and borrowable subclasses but that
-  might not be a good idea as the state of each book object can change 
+  might not be a good idea as the state of each book object can change
   (and a book can be BOTH sellable and borrowable).
 
 - ASSUME ALL DATA ENTERING BACKEND TO BE VALID:
