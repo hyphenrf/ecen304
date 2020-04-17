@@ -10,7 +10,6 @@ class User:
         List of books (lob): List<Int:ID>
         Email: str
         Password (pwd): str
-
         Borrowed books: List<Int:ID>
         Bought books: List<Int:ID>
         Pending books: List<Int:ID>
@@ -38,14 +37,16 @@ class User:
         editDob()
         editPwd()
         editEmail()
-
         editRating()
         editComment()
-        EditAddress()
+        editAddress()
 
         #REMOVING
         deleteShelf() later on
         removeUser()
+        removeRating()
+        removeComment()
+        removeAddress()
     '''
 
     def __init__(self, email: str, pwd: str, name='Jay', dob=None):
@@ -59,7 +60,7 @@ class User:
         self.dob = dob
         self.email = email
         self.pwd = _hashed(pwd)
-        self.visaSerial = ''
+        self.visaSerial = 0
         self.borrowed = []
         self.bought = []
         self.pending = []
@@ -84,11 +85,11 @@ class User:
             self.visaSerial = visaSerial
         return self.visaSerial
 
-    def borrow(self, bookID: int):
+    def borrow(self, bookID: int) -> list:
         self.borrowed.append(bookID)
         return self.borrowed
 
-    def buy(self, bookID: int):
+    def buy(self, bookID: int) -> list:
         self.bought.append(bookID)
         return self.bought
 
