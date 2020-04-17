@@ -1,4 +1,4 @@
-from .util import dateValidator, _hashed, _verify_email
+from .util import _hashed
 
 
 class Author:
@@ -13,11 +13,11 @@ class Author:
         Password (pwd): str
 
     Methods:
-        #ADDING => adding the author is done when the class instance is initiated
+        # ADDING => adding the author is done when the class instance is initiated
         addGenre()
         addBook()
 
-        #EDITING
+        # EDITING
         editGenre()
         editBook()
         editName()
@@ -25,67 +25,72 @@ class Author:
         editPwd()
         editEmail()
 
-        #REMOVING
+        # REMOVING
         removeGenre()
         removeBook()
         removeAuthor()
     '''
 
-    def __init__(self, email, pwd, name='Jay', dob=None):
+    def __init__(self, email: str, pwd: str, name='Jay', dob=None):
+
+        # ASSERTIONS
+        assert isinstance(pwd, str), "Password must be a string"
+        assert isinstance(email, str), "Email must be a string"
+        assert isinstance(name, str), "Name must be a string"
+
         self.name = name
-        self.dob = dateValidator(dob)
-        self.email = _verify_email(email)
+        self.dob = dob
+        self.email = email
         self.pwd = _hashed(pwd)
         self.genre = []
         self.lob = []
 
-    def addGenre(self, data):
-        if(isinstance(data, str)):
-            self.genre.append(data)
+    def add_genre(self, Genre: str) -> list:
+        if(isinstance(Genre, str)):
+            self.genre.append(Genre)
         else:
             print('Data not a string')
+        return self.genre
 
-    def editGenre(self, equal, change):
+    def edit_genre(self, old: str, new: str) -> list:
         for i in range(len(self.genre)):
-            if self.genre[i] == equal:
-                self.genre[i] = change
+            if self.genre[i] == old:
+                self.genre[i] = new
         return self.genre
 
-    def removeGenre(self, data):
-        filter(lambda genre: genre == data, self.genre)
+    def remove_genre(self, data: str) -> list:
+        filter(lambda genre: genre == str, self.genre)
         return self.genre
 
-    def addBook(self, data):
-        if(isinstance(data, str)):
-            self.lob.append(data)
+    def add_book(self, book: str) -> list:
+        if(isinstance(book, str)):
+            self.lob.append(book)
         else:
             print('Data not a string')
         return self.lob
 
-    def editBook(self, equal, change):
+    def edit_book(self, old: str, new: str) -> list:
         for i in range(len(self.lob)):
-            if self.lob[i] == equal:
-                self.lob[i] = change
+            if self.lob[i] == old:
+                self.lob[i] = new
         return self.lob
 
-    def removeBook(self, data):
+    def remove_book(self, data: str) -> list:
         filter(lambda book: book == data, self.lob)
         return self.lob
 
-    def editName(self, data):
-        self.name = data
+    def edit_name(self, name: str) -> str:
+        self.name = name
         return self.name
 
-    def editDob(self, data):
-        self.dob = data
+    def edit_dob(self, dob: str) -> str:
+        self.dob = dob
         return self.dob
 
-    def editPwd(self, data):
-        self.pwd = _hashed(data)
+    def edit_pwd(self, pwd: str) -> str:
+        self.pwd = _hashed(pwd)
+        return self.pwd
 
-    def editEmail(self, data):
-        self.name = _verify_email(data)
+    def edit_email(self, email: str) -> str:
+        self.name = email
         return self.email
-
-    def removeAuthor(self, id):
-        return None
