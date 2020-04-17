@@ -1,7 +1,7 @@
 Repository-wide coding style guidelines:
 
 - A foolish consistency is the hobogoblin of little minds:
-	https://www.python.org/dev/peps/pep-0008/#id15
+  https://www.python.org/dev/peps/pep-0008/#id15
 
 - avoid lines over 80 characters
 - indent with four spaces. Set your editor accordingly
@@ -9,46 +9,46 @@ Repository-wide coding style guidelines:
 - constant values will be in ALL_CAPS
 - avoid underscores in ClassNames
 
-- imports are followed by THREE blank lines. 
+- imports are followed by THREE blank lines.
 - toplevel functions and classes are padded with TWO blank lines.
 - methods inside a class, functions inside higher order functions, etc.. get a
-	SINGLE blank line padding.
+  SINGLE blank line padding.
 - code inside a method is better not padded.
 - use more blank lines whenever logical separation of code makes sense. Even if
-	it breaks rules from above.
+  it breaks rules from above.
 
 - docstrings auto-generate documentation for interactive shells and other tools:
 - prepend your files with a docstring breifly showcasing its interface.
 - append each function/class definition with a short docstring.
 - annotate AT LEAST your function outputs with types. Preferably annotate inputs
-	too. But that is optional. Variable annotation is even more optional.
+  too. But that is optional. Variable annotation is even more optional.
 
 - example:
-	def hello(name: str) -> str:
-	'''takes "foo" and returns "Hello, foo."'''
+  def hello(name: str) -> str:
+  '''takes "foo" and returns "Hello, foo."'''
 
-See also: https://www.python.org/dev/peps/pep-0484/ && 
-					https://www.python.org/dev/peps/pep-0526/
+See also: https://www.python.org/dev/peps/pep-0484/ &&
+          https://www.python.org/dev/peps/pep-0526/
 
 - always use self for the first argument to instance methods.
 - always use cls for the first argument to class methods.
 
 - private fields (methods, variables, etc..) begin with an _underscore
 - private fields of super/clashing classes should preferably begin with
-	__double_underscore.
-	- note: to access a double-undersocre field from outside, you have to type 
-					the classname too.
-		example:
-		class Foo has method __m. You can't access Foo.__m directly. 
-		To access it you use Foo._Foo__m
+  __double_underscore.
+  - note: to access a double-undersocre field from outside, you have to type 
+          the classname too.
+    example:
+    class Foo has method __m. You can't access Foo.__m directly.
+    To access it you use Foo._Foo__m
 
 
 - prefer is..not to not..is. e.g. if foo is not None
 - difference between `is` and `==`:
-	`a is b` means a and b point at the same object ref
-	`a == b` means a and b pass an equality test even as separate objects
+  `a is b` means a and b point at the same object ref
+  `a == b` means a and b pass an equality test even as separate objects
 
 - lambdas are anonymous. Assigning them to a variable defeats their purpose.
-	wrong: foo = lambda x: x + 1
-	correct: def foo(x): return x + 1
+  wrong: foo = lambda x: x + 1
+  correct: def foo(x): return x + 1
 
