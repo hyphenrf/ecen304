@@ -2,7 +2,7 @@ import csv
 import os
 
 from flask import Flask, render_template, request
-from models import *
+from models_ex import *
 
 app = Flask(__name__)
 
@@ -18,6 +18,19 @@ def main():
         db.session.add(flight)
         print(f"Added flight from {origin} to {destination} lasting {duration} minutes.")
     db.session.commit()
+
+# Dah nezbto shabh ely fo2
+
+    # load books.csv
+    #f-open("Updated_books.csv")
+    f=open(os.path.abspath("Updated_books.csv"),'r')
+    reader =csv.reader(f)
+    #create book objects
+    for isbn,title,author,year,total,sold,borrowed,price in reader:
+       
+        book=Book(isbn,title,author,int(year),int(total),int(sold),int(borrowed),float(price))            
+        #list of book objects
+        Books.append(book)  
 
 if __name__ == "__main__":
     with app.app_context():

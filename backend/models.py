@@ -7,9 +7,13 @@ import threading
 
 Books=[]
 BendingOrders=[]
-DeliveredOrders=[]
+# DeliveredOrders=[]
+# Hanshlhom
+'''
 BorrowedBooks = []
 LateBooks=[]
+
+'''
 
 today = datetime.now()
 
