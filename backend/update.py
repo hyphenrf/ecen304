@@ -6,15 +6,15 @@ from modelsBooks import *
 
 today = datetime.now()
 
-# Mehtaga el cod dah yeb2a sql at2ked kol youm
+# Mehtaga el code dah yeb2a sql at2ked kol youm
 
 def UpdateOrders():
-  threading.Timer(5, UpdateOrders).start()
+  threading.Timer(86400, UpdateOrders).start()
 
-  for order in BendingOrders:
+  orders = Orders.query.all()
+  for order in orders:
       # today >= (to consider difference in hours and minutes)
-      if today >= order["Time"] + timedelta(3):
-          #change state of book to "delivered" before appending to DeliveredOrders 
-          order["State"] = "Delivered"
-          DeliveredOrders.append(order)
-          BendingOrders.remove(order)
+      if today >= order.order_time + timedelta(days = 3):
+          order.status = True
+      
+
