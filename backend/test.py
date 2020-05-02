@@ -31,8 +31,8 @@ def main():
     '''
     # test OrderBook 
     '''
-    book = Books.query.get(2)
-    book.OrderBook(1)
+    book = Books.query.get(5)
+    book.OrderBook(2)
     order = Orders.query.get(1)
     print(order)
     '''
@@ -50,6 +50,13 @@ def main():
     book.EditRate(1,3)
     rating = Ratings.query.get(1)
     print(rating)
+    '''
+
+    # text Orders Delete
+    '''
+    order = Orders.query.get(5)
+    order.Delete()
+
     '''   
 
     

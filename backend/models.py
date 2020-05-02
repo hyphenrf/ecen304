@@ -50,15 +50,6 @@ class Books(db.Model):
         else:
             raise Exception('User Already has a rating. EditRate instead.')
 
-    def EditRate(self, user_id, rating):
-        myrating = Ratings.query.filter(and_(Ratings.user_id == user_id , Ratings.book_id == self.id)).first()
-        if myrating != None:
-            myrating.rating = rating
-            db.session.commit()
-        else:
-            raise Exception('User does not have a rating. RateBook instead.')
-
-
     def ReviewBook(self, user_id, review):
         review_count = Reviews.query.filter(and_(Reviews.user_id == user_id , Reviews.book_id == self.id)).count()
         if review_count > 0:
@@ -67,6 +58,16 @@ class Books(db.Model):
             db.session.commit()
         else:
             raise Exception('User Already has a review. EditReview instead.')
+
+    
+    def EditRate(self, user_id, rating):
+        myrating = Ratings.query.filter(and_(Ratings.user_id == user_id , Ratings.book_id == self.id)).first()
+        if myrating != None:
+            myrating.rating = rating
+            db.session.commit()
+        else:
+            raise Exception('User does not have a rating. RateBook instead.')
+
 
     def EditReview(self, user_id, review):
         myreview = Reviews.query.filter(and_(Reviews.user_id == user_id , Reviews.book_id == self.id)).first()
@@ -89,8 +90,14 @@ class Ratings(db.Model):
     def __str__(self):
         return f"user with id ({self.user_id}) rated {self.rating} for book with id ({self.book_id})"
 
+    def EditRate(self, rating):
+        self.rating = rating
+        db.session.commit()
 
-
+    def Delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        
 # -------------------    Reviews  ----------------------# #----3----#
 
 class Reviews(db.Model):
@@ -102,6 +109,14 @@ class Reviews(db.Model):
 
     def __str__(self):
         return f"user with id ({self.user_id}) reviewed [{self.review}] for book with id ({self.book_id})"
+
+    def EditReview(self, review):
+        self.review = review
+        db.session.commit()
+
+    def Delete(self):
+        db.session.delete(self)
+        db.session.commit()
 
 
 # -------------------    Orders  ----------------------# #----4----#
@@ -122,6 +137,13 @@ class Orders(db.Model):
         book = Books.query.get(self.book_id)
         book.Sell_Copy()
         db.session.commit()
+
+    def Delete(self):
+        if not self.status:
+            db.session.delete(self)
+            db.session.commit()
+        else:
+            raise Exception('Unable to delete order. Book Already Delivered.')
 
 
 
