@@ -19,7 +19,7 @@ def main():
 
     # Run only for the first time to fill the tables
 
-    
+    '''
 
     # load books.csv
     #f-open("Updated_books2.csv")
@@ -45,7 +45,7 @@ def main():
     db.session.commit()
 
 
-    
+    '''
 
     # Working
 
@@ -53,7 +53,7 @@ def main():
     #OrderBook(2, 2)
     #RateBook(2, 5, 2)
     #ReviewBook(2, "Fantastic!", 2)
-    #UpdateOrders()
+    UpdateOrders()
 
 
 

@@ -34,20 +34,14 @@ class Ratings(db.Model):
     # constrain 0 le 5 --> Done
     rating = db.Column(db.Integer, db.CheckConstraint('0 <= rating AND rating <= 5') ,nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    user_name = db.Column(db.String, db.ForeignKey("users.user_name"), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey("books.id"), nullable=False)
-    book_isbn = db.Column(db.String, db.ForeignKey("books.isbn"), nullable=False)
-    book_name = db.Column(db.String, db.ForeignKey("books.title"), nullable=False)
 
 
 class Orders(db.Model):
     __tablename__ = "orders"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    user_name = db.Column(db.String, db.ForeignKey("users.user_name"), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey("books.id"), nullable=False)
-    book_isbn = db.Column(db.String, db.ForeignKey("books.isbn"), nullable=False)
-    book_name = db.Column(db.String, db.ForeignKey("books.title"), nullable=False)
     # Dawry 3ala type el date --> Done
     order_time = db.Column(db.DateTime, nullable=False)
     # Zabaty dah...el default beta3o mawslsh (True we false) --> Done
@@ -59,10 +53,7 @@ class Reviews(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     review = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    user_name = db.Column(db.String, db.ForeignKey("users.user_name"), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey("books.id"), nullable=False)
-    book_isbn = db.Column(db.String, db.ForeignKey("books.isbn"), nullable=False)
-    book_name = db.Column(db.String, db.ForeignKey("books.title"), nullable=False)
 
 
 # ---------------------------   Methods for updating database --------------------#
@@ -89,7 +80,7 @@ def OrderBook(user_id,book_id):
     
     order = Books.query.get(book_id)
     if book_id == order.id:
-        new_order = Orders(user_id = user_id, book_isbn = order.isbn, book_id = order.id, order_time = today, status = False)
+        new_order = Orders(user_id = user_id, book_id = order.id, order_time = today, status = False)
         db.session.add(new_order)
     db.session.commit()
 
