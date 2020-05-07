@@ -30,14 +30,24 @@ class Books(db.Model):
         self.price = price
         db.session.commit()
 
-    def Sell_Copy(self):     
-        self.total -= 1
-        self.sold += 1
+    def Sell_Copy(self):
+        if (total >0):    
+            self.total -= 1
+            self.sold += 1
+            db.session.commit()
+        
+        else:
+            raise Exception('Book is not available for the time being.')
+
+    def Return_Copy(self):     
+        self.total += 1
+        self.sold -= 1
         db.session.commit()
 
     def OrderBook(self,user_id):
         today = datetime.now()        
         new_order = Orders(user_id = user_id, book_id = self.id, order_time = today)
+        self.Sell_Copy()
         db.session.add(new_order)
         db.session.commit()
 
@@ -134,14 +144,14 @@ class Orders(db.Model):
 
     def Deliver(self):     
         self.status= True
-        book = Books.query.get(self.book_id)
-        book.Sell_Copy()
         db.session.commit()
 
     def Delete(self):
         if not self.status:
+            book = Books.query.get(self.book_id)
+            book.Return_Copy()
             db.session.delete(self)
-            db.session.commit()
+            db.session.commit()            
         else:
             raise Exception('Unable to delete order. Book Already Delivered.')
 

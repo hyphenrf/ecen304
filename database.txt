@@ -1,0 +1,14 @@
+Host
+ec2-34-202-7-83.compute-1.amazonaws.com
+Database
+dabb7iss8h6876
+User
+nynvjnzdwddjcx
+Port
+5432
+Password
+09d28298ab43f17d54fb573194bdde2962a0b08f823369f98c014a0df1bc94c4
+URI
+postgres://nynvjnzdwddjcx:09d28298ab43f17d54fb573194bdde2962a0b08f823369f98c014a0df1bc94c4@ec2-34-202-7-83.compute-1.amazonaws.com:5432/dabb7iss8h6876
+Heroku CLI
+heroku pg:psql postgresql-fluffy-94434 --app book-store-nu

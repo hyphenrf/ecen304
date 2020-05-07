@@ -12,8 +12,23 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://ayasafan:25399@localhost/b
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+
 
 def main():
+    user = Users(user_name="Aya Safan")
+    print(type(user))
+
+    p1 = Person("John", 36)
+
+    print(p1.name)
+    print(type(p1))
+
 
     # test add user
     '''
