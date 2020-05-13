@@ -1,0 +1,41 @@
+*** dih el routes el f dema8i delwa2ti law 3ozt 8erhom ha7otohom w ablohom "*" same if i change anything
+eg. */authors/ay7aga
+*** if anyone wants to add any useful routes that i forgot or change the routings feel free to do so,
+ I wont integrate the routes till the last phase of the frontend which wont be till another couple of days
+ 13/5 -- MWMA
+
+ROUTE                                   REQUEST                                JOB                                             INPUTS(req in flask)
+
+/author                                   GET               responds with all authors in DB                                     NONE
+/author/:id                               GET               responds with author with corresponding ID                          NONE   
+/author/filterBy=name                     GET               returns the authors matching the search text                        NONE 
+/author?sortBy=name:asc                   GET               sorts the authors ascendingly                                       NONE                       
+/author?sortBy=name:desc                  GET               sorts the authors descendingly                                      NONE
+/author/create                            POST              Adds an author to the DB                                            Author's data entered by the user
+/author/edit?id                           PATCH             edits an author in the DB                                           NONE    
+/author/remove؟id                         DELETE            removes an author from the DB                                       NONE          
+
+/book                                     GET               responds with all books in DB                                       NONE     
+/book/:id                                 GET               responds with book with corresponding ID                            NONE                                       
+/book/filterBy=name                       GET               returns the books matching the search text                          NONE       
+/book?sortBy=name:asc                     GET               sorts the books ascendingly by name                                 NONE         
+/book?sortBy=name:desc                    GET               sorts the books descendingly by name                                NONE           
+/book?sortBy=price:asc                    GET               sorts the books ascendingly by price                                NONE     
+/book?sortBy=price:desc                   GET               sorts the books descendingly by price                               NONE           
+/book/create                              POST              Adds a book to the DB                                               Book's data entered by the user       
+/book/edit?id                             PATCH             edits a book in the DB                                              NONE         
+/book/remove?id                           DELETE            removes a book from the DB                                          NONE                   
+
+/user                                     GET                responds with all users in DB                                      NONE  
+/user/:id                                 GET                responds with user with corresponding ID                           NONE                                         
+/user/filterBy=name                       GET                returns the users matching the search text                         NONE      
+/user?sortBy=name:asc                     GET                sorts the users ascendingly                                        NONE
+/user?sortBy=name:desc                    GET                sorts the users descendingly                                       NONE      
+/user/login                               POST               Logs a user in                                                     username, password 
+/user/logout/me                           POST               Logs the user out                                                  NONE
+/user/create                              POST               Adds a user to the DB                                              User's data entered by the user  
+/user/edit?id                             PATCH              edits a user in the DB                                             NONE
+/user/remove?id                           DELETE             removes a user from the DB                                         NONE    
+
+N.B.: filters and sorting can occur togez  (just in case you forget)  its not a separate route it will be a conditional statement in the GET request
+law 8elet f 7aga 3adohali, bas 2ololi XD -- MWMA
