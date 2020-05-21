@@ -21,15 +21,7 @@ class Person:
 
 
 def main():
-    user = Users(user_name="Aya Safan")
-    print(type(user))
-
-    p1 = Person("John", 36)
-
-    print(p1.name)
-    print(type(p1))
-
-
+   
     # test add user
     '''
     user = Users(user_name="Aya Safan")
@@ -72,8 +64,15 @@ def main():
     order = Orders.query.get(5)
     order.Delete()
 
-    '''   
-
+    '''
+    # test user and admin
+    '''
+    user=User(email="mail", password="pass", name="aya", visa=12, address="address")
+    db.session.add(user)
+    admin=Admin(email="dmail", password="dpass", name="admin")
+    db.session.add(admin)        
+    db.session.commit()  
+    '''
     
 if __name__ == "__main__":
     with app.app_context():

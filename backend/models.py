@@ -15,7 +15,8 @@ class Books(db.Model):
     id = db.Column(db.Integer, primary_key =  True)
     isbn = db.Column(db.String, unique = True)
     title = db.Column(db.String, nullable=False)
-    author = db.Column(db.String, nullable=False)
+    author = db.Column(db.String, nullable=True)
+    author_id = db.Column(db.Integer, db.ForeignKey("authors.id"), nullable=False)
     year = db.Column(db.Integer, db.CheckConstraint('year <= 2020') ,nullable=False)
     total = db.Column(db.Integer, nullable=False)
     sold = db.Column(db.Integer, default = 0 ,nullable=False)
@@ -156,20 +157,60 @@ class Orders(db.Model):
             raise Exception('Unable to delete order. Book Already Delivered.')
 
 
-
-# -------------------    Users  ----------------------# #----5----#
-
-class Users(db.Model):
-    __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String, unique = True, nullable=False)
+# -------------------    Author  ----------------------# #----5----#
+class Author(db.Model):
+    __tablename__ = "authors"
+    id = db.Column(db.Integer, primary_key =  True)
+    name = db.Column(db.String, unique = True)
+    birth = db.Column(db.DateTime, nullable=True)
+    death= db.Column(db.DateTime, nullable=True)
+    bio = db.Column(db.String, nullable=True)
 
     def __str__(self):
-        return f"{self.username}"
+        return f"{self.name}"
+
+# -------------------    Actor  ----------------------# #----6----#
+'''
+- Actor Abstract object:
+  attrs:
+    email (you will receive it verified. It will be a string)
+    password (you will recieve it hashed. It will be of Bytes type)
+    name
+  Actor has no methods
+  User and Admin inherit from Actor
+'''
+class Actor(db.Model):
+    __tablename__ = "actors"
+    __mapper_args__ = {'polymorphic_identity': 'actors'}
+
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String, unique = True, nullable=False)
+    password = db.Column(db.String, unique = True, nullable=False)
+    name = db.Column(db.String, unique = True, nullable=False)
+    permissions= db.Column(db.Boolean, default = False, nullable=False)
 
 
 
+    def __str__(self):
+        return f"{self.name}"
+
+# -------------------   Actor > User  ----------------------# #----7----#
+class User(Actor):
+    __tablename__ = "users"
+    __mapper_args__ = {'polymorphic_identity': 'users'}
+
+    id = db.Column(db.Integer, db.ForeignKey('actors.id'), primary_key=True)
+    birth = db.Column(db.DateTime, nullable=True)
+    visa= db.Column(db.Integer, nullable=False)
+    address = db.Column(db.String, unique = True, nullable=False)
 
 
+# -------------------   Actor > Admin  ----------------------# #----8----#
+class Admin(Actor):
+    __tablename__ = "admins"
+    id = db.Column(db.Integer, db.ForeignKey('actors.id'), primary_key=True)
 
+    def __init__(self, **kwargs):
+        super(Admin, self).__init__(**kwargs)
+        self.permissions = True
 

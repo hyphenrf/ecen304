@@ -21,11 +21,22 @@ def main():
     reader =csv.reader(f)
     #create book objects
     for isbn,title,author,year,total,sold,price in reader:
-        book = Books(isbn = isbn,title = title,author = author,year = int(year),total = int(total),sold = int(sold), price = float(price)) 
-        db.session.add(book)   
-    db.session.commit()
+        
+        count=  Author.query.filter_by(name=author).count()
+        if count == 0:
+            author_obj= Author(name= author)
+            db.session.add(author_obj) 
+        db.session.commit()
 
-    db.session.commit()
+        author_query= Author.query.filter_by(name=author).first() 
+        book = Books(isbn = isbn,title = title, author = author, author_id = author_query.id, year = int(year),total = int(total),sold = int(sold), price = float(price))
+        db.session.add(book)
+        db.session.commit()
+
+           
+    
+
+    
 
 
     
