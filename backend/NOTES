@@ -32,3 +32,69 @@ TODO:
 
 - start work on flask and state.py
 
+
+################################################################################
+Backend notes:
+
+- isbn is already a unique identifier
+- frontend API doesn't specify borrowing/renting yet. You have the decision to
+  do it or leave it. It's OK either way
+
+- Author object:
+  attrs:
+    name
+    date of birth
+    date of death (optional)
+    books --> this is up to you whether you want to add that column or extract the info with a query
+    genres
+  Author has no methods, create yours as need be. Frontend API requires create, edit, and remove author
+
+- Actor Abstract object:
+  attrs:
+    email (you will receive it verified. It will be a string)
+    password (you will recieve it hashed. It will be of Bytes type)
+    name
+  Actor has no methods
+  User and Admin inherit from Actor
+
+  User:
+  attrs:
+    date of birth
+    visa serial
+    address --> The address should provide both conventional string style address and float coordinates (or zipcode)
+    Relating to the Book class:
+        pending: should be a mapping of book object to purchase date and amount
+        bought: same as pending
+        optional borrowed/rented: you can only rent one so amount is unnecessary
+        ratings: mapping from book to a rating in range 1-5
+        reviews: mapping from book to comment string
+  a user can:
+  order
+  cancel order
+  report that order was delivered
+  rate
+  review
+
+
+  Admin:
+  admin has no attributes that differ from its parent
+  all object editing/delition should be through admin. Yes or no? The decision is up to you. 
+    But the end goal is to have only admins be able to do so. Be it via endpoint verification or via the object itself.
+
+
+#######################################################################################################################
+Frontend notes:
+
+- expose endpoints on user for buying (and maybe borrowing/renting if backend
+  decides for it) books
+  also user rating and reviewing, and all user ratings/reviews
+  book should expose ratings/reviews
+
+- make the distinction between a /book endpoint, and /books endpoint. The
+  latter is a list while the former handles a single book only
+  HINT: sorting and filtering should be on the books/authors endpoint, not on the book/author
+
+- CRUD operations on book/user/etc.. are they better done only through an /admin endpoint? or is it better to auth on every api call?
+
+- users sorting and filtering are unnecessary I think, is there a justification
+  for them?
