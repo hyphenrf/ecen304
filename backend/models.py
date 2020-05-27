@@ -6,6 +6,8 @@ from datetime import timedelta
 
 db = SQLAlchemy()
 
+# all classes inherit from db.Model. This allows for the class to have some built-in relationship with SQLAlchemy to interact with the database.
+#__str__ is the built-in function in python, used in classes for string representation of object.
 
 # -------------------    Books  ----------------------# #----1----#
 
@@ -25,12 +27,13 @@ class Books(db.Model):
     def __str__(self):
         return f"{self.title} by {self.author} for ({self.price} EGP) ({self.total}) Copies."
 
-   
+    # EditBook_Num edits the price and total number of copies for a book
     def EditBook_Num(self, total,price):     
         self.total = total
         self.price = price
         db.session.commit()
-
+    
+    # Sell_Copy decreases total number of copies for a book by 1 and increase sold number by 1 when a copy is sold. It raises an Exception if there are no available copies.
     def Sell_Copy(self):
         if (total >0):    
             self.total -= 1
@@ -40,11 +43,13 @@ class Books(db.Model):
         else:
             raise Exception('Book is not available for the time being.')
 
+    # Return_Copy increases total number of copies for a book by 1 and decreases sold number by 1 when a copy is returned. 
     def Return_Copy(self):     
         self.total += 1
         self.sold -= 1
         db.session.commit()
 
+    # OrderBook  creates an object from Orders class, adds it to the database, and calls Sell_Copy method.
     def OrderBook(self,user_id):
         today = datetime.now()        
         new_order = Orders(user_id = user_id, book_id = self.id, order_time = today)
@@ -52,6 +57,7 @@ class Books(db.Model):
         db.session.add(new_order)
         db.session.commit()
 
+    # RateBook created an object from Ratings class and adds it to the database. It rasies an exception if the user has a rating in the database already.
     def RateBook(self, user_id, rating):
         rating_count = Ratings.query.filter(and_(Ratings.user_id == user_id , Ratings.book_id == self.id)).count()
         if rating_count == 0:
@@ -61,6 +67,7 @@ class Books(db.Model):
         else:
             raise Exception('User Already has a rating. EditRate instead.')
 
+    # ReviewBook created an object from Reviews class and adds it to the database. It rasies an exception if the user has a review in the database already.
     def ReviewBook(self, user_id, review):
         review_count = Reviews.query.filter(and_(Reviews.user_id == user_id , Reviews.book_id == self.id)).count()
         if review_count > 0:
@@ -70,7 +77,7 @@ class Books(db.Model):
         else:
             raise Exception('User Already has a review. EditReview instead.')
 
-    
+    # EditRate edits a user's rating. It rasies an exception if the user doesn't have a rating in the database already.
     def EditRate(self, user_id, rating):
         myrating = Ratings.query.filter(and_(Ratings.user_id == user_id , Ratings.book_id == self.id)).first()
         if myrating != None:
@@ -79,7 +86,7 @@ class Books(db.Model):
         else:
             raise Exception('User does not have a rating. RateBook instead.')
 
-
+    # EditReview edits a user's review. It rasies an exception if the user doesn't have a review in the database already.
     def EditReview(self, user_id, review):
         myreview = Reviews.query.filter(and_(Reviews.user_id == user_id , Reviews.book_id == self.id)).first()
         if myreview != None:
@@ -101,10 +108,12 @@ class Ratings(db.Model):
     def __str__(self):
         return f"user with id ({self.user_id}) rated {self.rating} for book with id ({self.book_id})"
 
+    # EditRate edits a user's rating. 
     def EditRate(self, rating):
         self.rating = rating
         db.session.commit()
 
+    # Delete deletes a user's rating from databse. 
     def Delete(self):
         db.session.delete(self)
         db.session.commit()
@@ -121,10 +130,12 @@ class Reviews(db.Model):
     def __str__(self):
         return f"user with id ({self.user_id}) reviewed [{self.review}] for book with id ({self.book_id})"
 
+    # EditReview edits a user's review.
     def EditReview(self, review):
         self.review = review
         db.session.commit()
 
+    # Delete deletes a user's review from databse.
     def Delete(self):
         db.session.delete(self)
         db.session.commit()
@@ -143,10 +154,12 @@ class Orders(db.Model):
     def __str__(self):
         return f"user with id ({self.user_id}) ordered for book with id ({self.book_id}) in {self.order_time} "
 
+    #Deliver sets order statue to True to indicate it is delivered.
     def Deliver(self):     
         self.status= True
         db.session.commit()
 
+    #Delete deletes an order from database and calls Return_Copy method. It rasies an exception of the order is already deliverd.
     def Delete(self):
         if not self.status:
             book = Books.query.get(self.book_id)
@@ -173,9 +186,10 @@ class Author(db.Model):
 '''
 - Actor Abstract object:
   attrs:
-    email (you will receive it verified. It will be a string)
-    password (you will recieve it hashed. It will be of Bytes type)
+    email (received it verified. It will be a string)
+    password (recieved it hashed. It will be of Bytes type)
     name
+    permissions (False by default)
   Actor has no methods
   User and Admin inherit from Actor
 '''
@@ -210,6 +224,7 @@ class Admin(Actor):
     __tablename__ = "admins"
     id = db.Column(db.Integer, db.ForeignKey('actors.id'), primary_key=True)
 
+    # set permissions to True for Admin objects when created to set them aside from User objects.
     def __init__(self, **kwargs):
         super(Admin, self).__init__(**kwargs)
         self.permissions = True
