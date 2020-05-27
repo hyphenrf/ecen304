@@ -1,1 +1,0 @@
-Library managment frontend README to be XD
